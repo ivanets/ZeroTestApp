@@ -27,49 +27,65 @@ git clone https://github.com/ivanets/ZeroTestApp.git .
 
   2. Open the app/config/architecture/main.plan (Main.plan example)
 ~~~
-* / User\TestController ~tpl/user/index.tpl!User
-GET /{module}/{param:\d+}\.{ext:\w+} User\TestController.magic [param=1] <User\TestModel> <User\UserModel> <C\C> <A> (config) $
+# Define model. Start line with "!" and define model dependencies in "<>"
+!App\IndexModel <Zero\DB\MySQL$db> <Zero\Config\Ini$ACLConfig>
+*App\IndexController <App\IndexModel$acl> <Zero\HTTP\Request$request>
+
+GET / App\IndexController
+
+ROUTE /test
+{
+	GET / App\IndexController
+	GET /action App\IndexController.test
+	POST /action App\IndexController.testPost
+}
 ~~~
 
   3. Write rules you need (Syntax)
 ~~~
-METHOD /url/{paramname:regexp} Namespace\ControllerName.MethodName [paramname=defaultvalue] <ModelToBeImportetOrCreated> (ServiceName)
+# on GET to / will run App\IndexController.indexAction
+GET / App\IndexController
 
-# Example
-GET /test/{param:\d+} Test\TestController.mytest [param=1] <User\UserModel> (config)
+# ROUTE key is for blocks of routes
+ROUTE /test
+{
+	GET / App\IndexController
+	# on GET to /test/action/1 will run App\IndexController.testAction
+	GET /action/{param:\d+} App\IndexController.test
+	POST /action App\IndexController.testPost
+}
 ~~~
 
-  4. Run your web application with scaffold. (in app/bootstrap.php)
+  4. Run scaffold action from console.
 ~~~php
-->scaffolding('config/architecture/main.plan')
+$ cd /path/to/app
+$ app/console scaffolding architecture/main.plan
 ~~~
 
-  5. Turn off scaffold and use.(in app/bootstrap.php)
+
+  5. You can also use console commands.
 ~~~php
-//->scaffolding('config/architecture/main.plan')
-~~~
+Will rewrite all routes
+$ app/console scaffolding architecture/main.plan --routes
+Will rewrite all scaffolded content (Be careful)
+$ app/console scaffolding architecture/main.plan --force
 
+Will run application asd start testAction in IndexController with param=2
+$ app/console run App\IndexController.test [param=2]
+~~~
 
 ### app/bootstrap.php example ###
 Short:
 ~~~php
-<?=(require_once '../Zero/init.php').(new Zero\Core\Zero(new Zero\Config\Yaml('config/env.yml')))
-->setService('config', $config = new Zero\Config\Json('config/test.json'))
-->setService('request', new Zero\HTTP\Request)
-//->setService('db', new Zero\DB\MySQL($config['mysql']))
-->scaffolding('config/architecture/main.plan')
-->run()
-;
-~~~
-Classic:
-~~~php
 <?php
-require_once '../Zero/init.php';
-$app = new Zero\Core\Zero(new Zero\Config\Yaml('config/env.yml'));
+require_once '../vendor/autoload.php';
 
-$app->setService('config', $config = new Zero\Config\Json('config/test.json'));
-$app->setService('request', new Zero\HTTP\Request);
-//$app->setService('db', new Zero\DB\MySQL($config['mysql']));
-$app->scaffolding('config/architecture/main.plan');
-echo $app->run();
+$environment = new Zero\Config\Yaml('config/env.yml');
+$app = new Zero\Core\Zero($environment);
+
+$app->run();
+
+$view = $app->getView();
+$renderedData = $view->render();
+echo $renderedData;
 ~~~

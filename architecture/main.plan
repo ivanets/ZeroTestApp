@@ -10,6 +10,6 @@ GET / App\IndexController
 ROUTE /test
 {
 	GET / App\IndexController
-	GET /action Vendor\VendorAPIController.test
-	POST /action Vendor\VendorAPIController.testPost
+	GET /action App\IndexController.test
+	POST /action App\IndexController.testPost
 }
