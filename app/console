@@ -1,0 +1,6 @@
+#!/usr/bin/env php
+<?php
+//set 775
+$_ENV['cli'] = getcwd();
+chdir(__DIR__);
+include 'bootstrap.php';

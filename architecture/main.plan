@@ -1,0 +1,15 @@
+#MODELS
+@models.plan
+#CONTROLLERS
+@controllers.plan
+
+
+#ROUTES
+GET / App\IndexController
+
+ROUTE /test
+{
+	GET / App\IndexController
+	GET /action Vendor\VendorAPIController.test
+	POST /action Vendor\VendorAPIController.testPost
+}
