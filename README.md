@@ -57,14 +57,14 @@ ROUTE /test
 ~~~
 
   4. Run scaffold action from console.
-~~~php
+~~~
 $ cd /path/to/app
 $ app/console scaffolding architecture/main.plan
 ~~~
 
 
   5. You can also use console commands.
-~~~php
+~~~
 Will rewrite all routes
 $ app/console scaffolding architecture/main.plan --routes
 Will rewrite all scaffolded content (Be careful)
@@ -73,6 +73,17 @@ $ app/console scaffolding architecture/main.plan --force
 Will run application asd start testAction in IndexController with param=2
 $ app/console run App\IndexController.test [param=2]
 ~~~
+
+  6. Configure you editor.
+~~~
+Sublime text:
+
+Prefences -> Browse packages -> User
+
+Copy ZeroPlanFile.tmLanguage there.
+Back to sublime text, View -> Syntax -> Open all with current extension as -> ZeroPlanFile
+~~~
+
 
 ### app/bootstrap.php example ###
 Short:
