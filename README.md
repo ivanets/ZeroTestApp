@@ -20,12 +20,12 @@ How to use
 
 You need to do next steps:
 
-  1. Clone Test app git repo to your web server
+1. Clone Test app git repo to your web server
 ~~~
 git clone https://github.com/ivanets/ZeroTestApp.git .
 ~~~
 
-  2. Open the app/config/architecture/main.plan (Main.plan example)
+2. Open the app/config/architecture/main.plan (Main.plan example)
 ~~~
 # Define model. Start line with "!" and define model dependencies in "<>"
 !App\IndexModel <Zero\DB\MySQL$db> <Zero\Config\Ini$ACLConfig>
@@ -41,7 +41,7 @@ ROUTE /test
 }
 ~~~
 
-  3. Write rules you need (Syntax)
+3. Write rules you need (Syntax)
 ~~~
 # on GET to / will run App\IndexController.indexAction
 GET / App\IndexController
@@ -56,14 +56,14 @@ ROUTE /test
 }
 ~~~
 
-  4. Run scaffold action from console.
+4. Run scaffold action from console.
 ~~~
 $ cd /path/to/app
 $ app/console scaffolding architecture/main.plan
 ~~~
 
 
-  5. You can also use console commands.
+5. You can also use console commands.
 ~~~
 Will rewrite all routes
 $ app/console scaffolding architecture/main.plan --routes
@@ -74,7 +74,7 @@ Will run application asd start testAction in IndexController with param=2
 $ app/console run App\IndexController.test [param=2]
 ~~~
 
-  6. Configure you editor.
+6. Configure you editor.
 ~~~
 Sublime text:
 
