@@ -71,7 +71,7 @@ Will rewrite all scaffolded content (Be careful)
 $ app/console scaffolding architecture/main.plan --force
 
 Will run application asd start testAction in IndexController with param=2
-$ app/console run App\IndexController.test [param=2]
+$ app/console run App\IndexController.test param=2
 ~~~
 
 Configure you editor.
